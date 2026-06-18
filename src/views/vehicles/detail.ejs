@@ -1,0 +1,132 @@
+<h1>
+  <%= vehicle.year %>
+  <%= vehicle.make %>
+  <%= vehicle.model %>
+</h1>
+
+<p>
+  Category:
+  <%= vehicle.category_name %>
+</p>
+
+<p>
+  Mileage:
+  <%= vehicle.mileage %>
+</p>
+
+<p>
+  Price:
+  $<%= vehicle.price %>
+</p>
+
+<p>
+  <%= vehicle.description %>
+</p>
+
+<hr>
+
+<h2>Reviews</h2>
+
+<% if (reviews.length === 0) { %>
+
+  <p>No reviews yet.</p>
+
+<% } %>
+
+<% reviews.forEach(review => { %>
+
+    
+  <div>
+
+    <strong>
+      <%= review.first_name %>
+      <%= review.last_name %>
+    </strong>
+
+    <p>
+      Rating:
+      <%= review.rating %>/5
+    </p>
+
+    <p>
+      <%= review.review_text %>
+    </p>
+
+  </div>
+
+  <% if (
+  sessionUser &&
+  sessionUser.user_id === review.user_id
+) { %>
+
+  <a
+    href="/reviews/edit/<%= review.review_id %>"
+  >
+    Edit
+  </a>
+
+  <form
+    action="/reviews/delete/<%= review.review_id %>"
+    method="POST"
+  >
+
+    <button type="submit">
+      Delete
+    </button>
+
+  </form>
+
+<% } %>
+
+  <hr>
+
+  
+
+<% }) %>
+
+<% if (sessionUser) { %>
+
+<h3>Leave a Review</h3>
+
+<form
+  action="/reviews/vehicle/<%= vehicle.vehicle_id %>"
+  method="POST"
+>
+
+  <label>
+    Rating
+  </label>
+
+  <select
+    name="rating"
+    required
+  >
+    <option value="5">5</option>
+    <option value="4">4</option>
+    <option value="3">3</option>
+    <option value="2">2</option>
+    <option value="1">1</option>
+  </select>
+
+  <br><br>
+
+  <textarea
+    name="review_text"
+    required
+  ></textarea>
+
+  <br><br>
+  
+  <button type="submit">
+    Submit Review
+  </button>
+
+</form>
+
+<% } else { %>
+
+<p>
+  Login to leave a review.
+</p>
+
+<% } %>

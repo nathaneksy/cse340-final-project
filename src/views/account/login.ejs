@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title><%= title %></title>
+</head>
+<body>
+
+<h1>Login</h1>
+
+<form action="/account/login" method="POST">
+
+  <label>
+    Email
+    <input
+      type="email"
+      name="email"
+      required
+    >
+  </label>
+
+  <br><br>
+
+  <label>
+    Password
+    <input
+      type="password"
+      name="password"
+      required
+    >
+  </label>
+
+  <br><br>
+
+  <button type="submit">
+    Login
+  </button>
+
+</form>
+
+</body>
+</html>

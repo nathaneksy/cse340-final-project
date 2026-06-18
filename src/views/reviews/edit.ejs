@@ -1,0 +1,39 @@
+<h1>Edit Review</h1>
+
+<form
+  method="POST"
+  action="/reviews/edit/<%= review.review_id %>"
+>
+
+  <select
+    name="rating"
+  >
+
+    <% for(let i = 1; i <= 5; i++) { %>
+
+      <option
+        value="<%= i %>"
+        <%= review.rating == i
+            ? "selected"
+            : "" %>
+      >
+        <%= i %>
+      </option>
+
+    <% } %>
+
+  </select>
+
+  <br><br>
+
+  <textarea
+    name="review_text"
+  ><%= review.review_text %></textarea>
+
+  <br><br>
+
+  <button type="submit">
+    Save Changes
+  </button>
+
+</form>
