@@ -1,0 +1,40 @@
+<h1>Manage Service Requests</h1>
+
+<% requests.forEach(request => { %>
+
+  <div>
+
+    <h3>
+      <%= request.first_name %>
+      <%= request.last_name %>
+    </h3>
+
+    <p>
+      Vehicle:
+      <%= request.year %>
+      <%= request.make %>
+      <%= request.model %>
+    </p>
+
+    <p>
+      Status:
+      <%= request.status %>
+    </p>
+
+    <p>
+      <%= request.description %>
+    </p>
+
+    <a
+  href="/service/manage/<%= request.request_id %>"
+>
+  Manage Request
+</a>
+
+    <hr>
+
+  </div>
+
+  
+
+<% }) %>

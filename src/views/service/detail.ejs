@@ -1,0 +1,88 @@
+<h1>Service Request</h1>
+
+<h3>
+  <%= request.first_name %>
+  <%= request.last_name %>
+</h3>
+
+<p>
+  Vehicle:
+  <%= request.year %>
+  <%= request.make %>
+  <%= request.model %>
+</p>
+
+<p>
+  Current Status:
+  <strong>
+    <%= request.status %>
+  </strong>
+</p>
+
+<p>
+  <%= request.description %>
+</p>
+
+<hr>
+
+<h2>Update Status</h2>
+
+<form
+  action="/service/manage/<%= request.request_id %>/status"
+  method="POST"
+>
+
+  <select name="status">
+    <option>Submitted</option>
+    <option>In Progress</option>
+    <option>Waiting For Parts</option>
+    <option>Completed</option>
+    <option>Cancelled</option>
+  </select>
+
+  <button>
+    Update
+  </button>
+
+</form>
+
+<hr>
+
+<h2>Service Notes</h2>
+
+<% notes.forEach(note => { %>
+
+  <div>
+
+    <strong>
+      <%= note.first_name %>
+      <%= note.last_name %>
+    </strong>
+
+    <p>
+      <%= note.note_text %>
+    </p>
+
+    <hr>
+
+  </div>
+
+<% }) %>
+
+<form
+  action="/service/manage/<%= request.request_id %>/note"
+  method="POST"
+>
+
+  <textarea
+    name="note_text"
+    required
+  ></textarea>
+
+  <br><br>
+
+  <button>
+    Add Note
+  </button>
+
+</form>

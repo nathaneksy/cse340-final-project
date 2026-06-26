@@ -1,0 +1,33 @@
+<h1>My Service Requests</h1>
+
+<% requests.forEach(request => { %>
+
+  <div>
+
+    <h3>
+      <%= request.year %>
+      <%= request.make %>
+      <%= request.model %>
+    </h3>
+
+    <p>
+      Service:
+      <%= request.service_type %>
+    </p>
+
+    <p>
+      Status:
+      <strong>
+        <%= request.status %>
+      </strong>
+    </p>
+
+    <p>
+      <%= request.description %>
+    </p>
+
+    <hr>
+
+  </div>
+
+<% }) %>
