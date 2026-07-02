@@ -1,0 +1,32 @@
+<h1>Admin Dashboard</h1>
+
+<p>
+  Welcome,
+  <%= user.first_name %>
+</p>
+
+<ul>
+
+  <li>
+    <a href="/admin/vehicles">
+      Manage Vehicles
+    </a>
+  </li>
+
+  <li>
+    <a href="/service/manage">
+      Manage Service Requests
+    </a>
+  </li>
+
+  <% if (user.role === 'owner') { %>
+
+    <li>
+      <a href="/admin/categories">
+        Manage Categories
+      </a>
+    </li>
+
+  <% } %>
+
+</ul>

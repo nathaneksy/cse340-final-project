@@ -6,12 +6,12 @@ import pgSession from "connect-pg-simple";
 import vehicleRoute from "./routes/vehicleRoute.js";
 import reviewRoute from "./routes/reviewRoute.js";
 import serviceRoute from "./routes/serviceRoute.js";
-
 import baseRoute from "./routes/baseRoute.js";
 import categoryRoute from "./routes/categoryRoute.js";
 import accountRoute from "./routes/accountRoute.js";
 import pool from "./database/pool.js";
 import dashboardRoute from "./routes/dashboardRoute.js";
+import adminRoute from "./routes/adminRoute.js";
 
 dotenv.config();
 
@@ -51,6 +51,7 @@ app.use("/dashboard", dashboardRoute);
 app.use("/vehicles", vehicleRoute);
 app.use("/reviews", reviewRoute);
 app.use("/service", serviceRoute);
+app.use("/admin", adminRoute);
 
 const PORT = process.env.PORT || 3000;
 

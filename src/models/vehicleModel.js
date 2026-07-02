@@ -53,3 +53,78 @@ export async function getVehicleReviews(vehicleId) {
 
   return result.rows;
 }
+
+export async function createVehicle(
+  vehicle
+) {
+  const sql = `
+    INSERT INTO vehicles (
+      category_id,
+      year,
+      make,
+      model,
+      mileage,
+      price,
+      description
+    )
+    VALUES ($1,$2,$3,$4,$5,$6,$7)
+    RETURNING *;
+  `;
+
+  const result =
+    await pool.query(sql, [
+      vehicle.category_id,
+      vehicle.year,
+      vehicle.make,
+      vehicle.model,
+      vehicle.mileage,
+      vehicle.price,
+      vehicle.description,
+    ]);
+
+  return result.rows[0];
+}
+
+export async function updateVehicle(
+  id,
+  vehicle
+) {
+  const sql = `
+    UPDATE vehicles
+    SET
+      category_id=$1,
+      year=$2,
+      make=$3,
+      model=$4,
+      mileage=$5,
+      price=$6,
+      description=$7
+    WHERE vehicle_id=$8
+    RETURNING *;
+  `;
+
+  const result =
+    await pool.query(sql, [
+      vehicle.category_id,
+      vehicle.year,
+      vehicle.make,
+      vehicle.model,
+      vehicle.mileage,
+      vehicle.price,
+      vehicle.description,
+      id,
+    ]);
+
+  return result.rows[0];
+}
+
+export async function deleteVehicle(
+  id
+) {
+  const sql = `
+    DELETE FROM vehicles
+    WHERE vehicle_id = $1;
+  `;
+
+  await pool.query(sql, [id]);
+}

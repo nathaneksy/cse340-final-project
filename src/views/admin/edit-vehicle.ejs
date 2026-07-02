@@ -1,0 +1,87 @@
+<h1>Edit Vehicle</h1>
+
+<form
+  action="/admin/vehicles/edit/<%= vehicle.vehicle_id %>"
+  method="POST"
+>
+
+<label>Category</label>
+
+<select name="category_id">
+
+<% categories.forEach(category => { %>
+
+  <option
+    value="<%= category.category_id %>"
+    <%= category.category_id === vehicle.category_id
+        ? 'selected'
+        : '' %>
+  >
+    <%= category.category_name %>
+  </option>
+
+<% }) %>
+
+</select>
+
+<br><br>
+
+<label>Year</label>
+<input
+  type="number"
+  name="year"
+  value="<%= vehicle.year %>"
+>
+
+<br><br>
+
+<label>Make</label>
+<input
+  type="text"
+  name="make"
+  value="<%= vehicle.make %>"
+>
+
+<br><br>
+
+<label>Model</label>
+<input
+  type="text"
+  name="model"
+  value="<%= vehicle.model %>"
+>
+
+<br><br>
+
+<label>Mileage</label>
+<input
+  type="number"
+  name="mileage"
+  value="<%= vehicle.mileage %>"
+>
+
+<br><br>
+
+<label>Price</label>
+<input
+  type="number"
+  step="0.01"
+  name="price"
+  value="<%= vehicle.price %>"
+>
+
+<br><br>
+
+<label>Description</label>
+
+<textarea
+  name="description"
+><%= vehicle.description %></textarea>
+
+<br><br>
+
+<button>
+  Save Changes
+</button>
+
+</form>
