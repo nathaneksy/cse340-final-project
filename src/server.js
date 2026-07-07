@@ -12,6 +12,7 @@ import accountRoute from "./routes/accountRoute.js";
 import pool from "./database/pool.js";
 import dashboardRoute from "./routes/dashboardRoute.js";
 import adminRoute from "./routes/adminRoute.js";
+import contactRoute from "./routes/contactRoute.js";
 
 dotenv.config();
 
@@ -52,6 +53,7 @@ app.use("/vehicles", vehicleRoute);
 app.use("/reviews", reviewRoute);
 app.use("/service", serviceRoute);
 app.use("/admin", adminRoute);
+app.use("/contact", contactRoute);
 
 const PORT = process.env.PORT || 3000;
 
