@@ -1,5 +1,5 @@
 import express from "express";
-import { checkEmployee } from "../middleware/authMiddleware.js";
+import { checkEmployee, checkOwner } from "../middleware/authMiddleware.js";
 import {
   getAllVehicles,
   createVehicle,
@@ -8,8 +8,13 @@ import {
   deleteVehicle,
 } from "../models/vehicleModel.js";
 
-import { getCategories }
-  from "../models/categoryModel.js";
+import {
+  getCategories,
+  getCategoryById,
+  createCategory,
+  updateCategory,
+  deleteCategory,
+} from "../models/categoryModel.js";
 
 const router = express.Router();
 
@@ -145,6 +150,107 @@ router.post(
       res.redirect(
         "/admin/vehicles"
       );
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
+router.get(
+  "/categories",
+  checkOwner,
+  async (req, res, next) => {
+    try {
+      const categories = await getCategories();
+
+      res.render("admin/categories", {
+        title: "Manage Categories",
+        categories,
+      });
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
+router.get(
+  "/categories/new",
+  checkOwner,
+  (req, res) => {
+    res.render("admin/add-category", {
+      title: "Add Category",
+    });
+  }
+);
+
+router.post(
+  "/categories/new",
+  checkOwner,
+  async (req, res, next) => {
+    try {
+      const { category_name } = req.body;
+
+      await createCategory(category_name);
+
+      res.redirect("/admin/categories");
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
+router.get(
+  "/categories/edit/:id",
+  checkOwner,
+  async (req, res, next) => {
+    try {
+      const category = await getCategoryById(
+        req.params.id
+      );
+
+      if (!category) {
+        return res
+          .status(404)
+          .send("Category not found");
+      }
+
+      res.render("admin/edit-category", {
+        title: "Edit Category",
+        category,
+      });
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
+router.post(
+  "/categories/edit/:id",
+  checkOwner,
+  async (req, res, next) => {
+    try {
+      const { category_name } = req.body;
+
+      await updateCategory(
+        req.params.id,
+        category_name
+      );
+
+      res.redirect("/admin/categories");
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
+router.post(
+  "/categories/delete/:id",
+  checkOwner,
+  async (req, res, next) => {
+    try {
+      await deleteCategory(req.params.id);
+
+      res.redirect("/admin/categories");
     } catch (error) {
       next(error);
     }

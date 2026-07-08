@@ -1,0 +1,60 @@
+<h1>Manage Categories</h1>
+
+<p>
+  <a href="/admin/categories/new">
+    Add New Category
+  </a>
+</p>
+
+<% if (categories.length === 0) { %>
+
+  <p>No categories found.</p>
+
+<% } else { %>
+
+<table border="1">
+
+  <thead>
+    <tr>
+      <th>Category Name</th>
+      <th>Edit</th>
+      <th>Delete</th>
+    </tr>
+  </thead>
+
+  <tbody>
+
+    <% categories.forEach(category => { %>
+
+      <tr>
+
+        <td>
+          <%= category.category_name %>
+        </td>
+
+        <td>
+          <a href="/admin/categories/edit/<%= category.category_id %>">
+            Edit
+          </a>
+        </td>
+
+        <td>
+          <form
+            action="/admin/categories/delete/<%= category.category_id %>"
+            method="POST"
+          >
+            <button type="submit">
+              Delete
+            </button>
+          </form>
+        </td>
+
+      </tr>
+
+    <% }) %>
+
+  </tbody>
+
+</table>
+
+<% } %>
