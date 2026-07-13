@@ -4,6 +4,10 @@ import {
   getVehicleReviews,
 } from "../models/vehicleModel.js";
 
+import {
+  getVehicleImages,
+} from "../models/imageModel.js";
+
 export async function buildInventory(req, res, next) {
   try {
     const vehicles = await getAllVehicles();
@@ -31,6 +35,9 @@ export async function buildVehicleDetail(
     const reviews =
       await getVehicleReviews(vehicleId);
 
+    const images =
+      await getVehicleImages(vehicleId);
+
     if (!vehicle) {
       return res.status(404).send(
         "Vehicle not found"
@@ -41,6 +48,7 @@ export async function buildVehicleDetail(
       title: `${vehicle.year} ${vehicle.make} ${vehicle.model}`,
       vehicle,
       reviews,
+      images,
       sessionUser: req.session.user,
     });
   } catch (error) {

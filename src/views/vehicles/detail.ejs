@@ -3,7 +3,27 @@
   <%= vehicle.make %>
   <%= vehicle.model %>
 </h1>
+  <% if (images.length > 0) { %>
 
+    <div class="vehicle-images">
+
+      <% images.forEach(image => { %>
+
+        <img
+          src="<%= image.image_path %>"
+          alt="<%= vehicle.year %> <%= vehicle.make %> <%= vehicle.model %>"
+          width="500"
+        >
+
+      <% }) %>
+
+    </div>
+
+  <% } else { %>
+
+    <p>No images available.</p>
+
+  <% } %>
 <p>
   Category:
   <%= vehicle.category_name %>
