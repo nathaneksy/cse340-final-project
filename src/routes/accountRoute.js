@@ -8,11 +8,21 @@ import {
   accountLogout,
 } from "../controllers/accountController.js";
 
+import {
+    registrationRules,
+    checkValidation
+} from "../utilities/validation.js";
+
 const router = express.Router();
 
 router.get("/register", buildRegister);
 
-router.post("/register", registerAccount);
+router.post(
+    "/register",
+    registrationRules,
+    checkValidation,
+    registerAccount
+);
 
 router.get("/login", buildLogin);
 

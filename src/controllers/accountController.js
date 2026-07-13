@@ -7,6 +7,8 @@ import {
 export async function buildRegister(req, res) {
   res.render("account/register", {
     title: "Register",
+    errors: [],
+    formData: {},
   });
 }
 
@@ -21,9 +23,17 @@ export async function registerAccount(req, res, next) {
 
     const existingUser = await getUserByEmail(email);
 
-    if (existingUser) {
-      return res.send("Email already exists");
-    }
+      if (existingUser) {
+        return res.status(400).render("account/register", {
+          title: "Register",
+          errors: [
+            {
+              msg: "An account with that email already exists.",
+            },
+          ],
+          formData: req.body,
+        });
+      }
 
     const password_hash = await bcrypt.hash(password, 10);
 
@@ -34,11 +44,7 @@ export async function registerAccount(req, res, next) {
       password_hash,
     });
 
-    res.send(`
-      Account created successfully!
-      <br>
-      User ID: ${user.user_id}
-    `);
+    res.redirect("/account/login");
 
   } catch (error) {
     next(error);
