@@ -1,5 +1,19 @@
 <h1>Edit Vehicle</h1>
+<% if (errors && errors.length > 0) { %>
 
+<div class="errors">
+  <ul>
+
+    <% errors.forEach(error => { %>
+
+      <li><%= error.msg %></li>
+
+    <% }) %>
+
+  </ul>
+</div>
+
+<% } %>
 <form
   action="/admin/vehicles/edit/<%= vehicle.vehicle_id %>"
   method="POST"
@@ -40,6 +54,7 @@
   type="text"
   name="make"
   value="<%= vehicle.make %>"
+  value="<%= formData?.make || '' %>"
 >
 
 <br><br>
@@ -49,6 +64,7 @@
   type="text"
   name="model"
   value="<%= vehicle.model %>"
+  value="<%= formData?.model || '' %>"
 >
 
 <br><br>
@@ -58,6 +74,7 @@
   type="number"
   name="mileage"
   value="<%= vehicle.mileage %>"
+  value="<%= formData?.mileage || '' %>"
 >
 
 <br><br>
@@ -68,6 +85,7 @@
   step="0.01"
   name="price"
   value="<%= vehicle.price %>"
+  value="<%= formData?.price || '' %>"
 >
 
 <br><br>

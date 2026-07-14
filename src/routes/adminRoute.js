@@ -16,6 +16,9 @@ import {
   deleteCategory,
 } from "../models/categoryModel.js";
 
+import { vehicleRules, validate } from "../utilities/validation.js";
+import { validationResult } from "express-validator";
+
 const router = express.Router();
 
 router.get(
@@ -51,16 +54,14 @@ router.get(
   checkEmployee,
   async (req, res, next) => {
     try {
-      const categories =
-        await getCategories();
+      const categories = await getCategories();
 
-      res.render(
-        "admin/add-vehicle",
-        {
-          title: "Add Vehicle",
-          categories,
-        }
-      );
+      res.render("admin/add-vehicle", {
+        title: "Add Vehicle",
+        categories,
+        errors: [],
+        formData: {},
+      });
     } catch (error) {
       next(error);
     }
@@ -70,16 +71,30 @@ router.get(
 router.post(
   "/vehicles/new",
   checkEmployee,
+  vehicleRules,
   async (req, res, next) => {
     try {
 
-      await createVehicle(
-        req.body
-      );
+      const errors = validationResult(req);
 
-      res.redirect(
-        "/admin/vehicles"
-      );
+      if (!errors.isEmpty()) {
+
+        const categories = await getCategories();
+
+        return res.status(400).render(
+          "admin/add-vehicle",
+          {
+            title: "Add Vehicle",
+            categories,
+            errors: errors.array(),
+            formData: req.body,
+          }
+        );
+      }
+
+      await createVehicle(req.body);
+
+      res.redirect("/admin/vehicles");
 
     } catch (error) {
       next(error);
@@ -105,14 +120,13 @@ router.get(
           .send("Vehicle not found");
       }
 
-      res.render(
-        "admin/edit-vehicle",
-        {
-          title: "Edit Vehicle",
-          vehicle,
-          categories,
-        }
-      );
+      res.render("admin/edit-vehicle", {
+        title: "Edit Vehicle",
+        vehicle,
+        categories,
+        errors: [],
+        formData: {},
+      });
     } catch (error) {
       next(error);
     }
@@ -122,13 +136,35 @@ router.get(
 router.post(
   "/vehicles/edit/:id",
   checkEmployee,
+  vehicleRules,
   async (req, res, next) => {
     try {
       await updateVehicle(
         req.params.id,
         req.body
       );
+        const errors = validationResult(req);
 
+        if (!errors.isEmpty()) {
+
+            const categories = await getCategories();
+
+            const vehicle = {
+                vehicle_id: req.params.id,
+                ...req.body,
+            };
+
+            return res.status(400).render(
+                "admin/edit-vehicle",
+                {
+                    title: "Edit Vehicle",
+                    vehicle,
+                    categories,
+                    errors: errors.array(),
+                    formData: req.body,
+                }
+            );
+        }
       res.redirect(
         "/admin/vehicles"
       );
