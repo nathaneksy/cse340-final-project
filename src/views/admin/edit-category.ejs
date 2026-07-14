@@ -1,5 +1,21 @@
 <h1>Edit Category</h1>
+<% if (errors && errors.length > 0) { %>
 
+<div class="errors">
+
+<ul>
+
+<% errors.forEach(error => { %>
+
+<li><%= error.msg %></li>
+
+<% }) %>
+
+</ul>
+
+</div>
+
+<% } %>
 <form
   action="/admin/categories/edit/<%= category.category_id %>"
   method="POST"
@@ -16,6 +32,7 @@
     id="category_name"
     name="category_name"
     value="<%= category.category_name %>"
+    value="<%= formData?.category_name || '' %>"
     required
   >
 

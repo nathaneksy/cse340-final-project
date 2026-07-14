@@ -16,7 +16,12 @@ import {
   deleteCategory,
 } from "../models/categoryModel.js";
 
-import { vehicleRules, validate } from "../utilities/validation.js";
+import { 
+  vehicleRules, 
+  categoryRules,
+  validate, 
+} from "../utilities/validation.js";
+
 import { validationResult } from "express-validator";
 
 const router = express.Router();
@@ -214,7 +219,9 @@ router.get(
   checkOwner,
   (req, res) => {
     res.render("admin/add-category", {
-      title: "Add Category",
+        title: "Add Category",
+        errors: [],
+        formData: {},
     });
   }
 );
@@ -222,6 +229,11 @@ router.get(
 router.post(
   "/categories/new",
   checkOwner,
+  categoryRules,
+  validate(
+    "admin/add-category",
+    "Add Category"
+  ),
   async (req, res, next) => {
     try {
       const { category_name } = req.body;
@@ -251,8 +263,10 @@ router.get(
       }
 
       res.render("admin/edit-category", {
-        title: "Edit Category",
-        category,
+          title: "Edit Category",
+          category,
+          errors: [],
+          formData: {},
       });
     } catch (error) {
       next(error);
@@ -263,16 +277,37 @@ router.get(
 router.post(
   "/categories/edit/:id",
   checkOwner,
+  categoryRules,
   async (req, res, next) => {
     try {
-      const { category_name } = req.body;
+
+      const errors = validationResult(req);
+
+      if (!errors.isEmpty()) {
+
+        const category = {
+          category_id: req.params.id,
+          category_name: req.body.category_name,
+        };
+
+        return res.status(400).render(
+          "admin/edit-category",
+          {
+            title: "Edit Category",
+            category,
+            errors: errors.array(),
+            formData: req.body,
+          }
+        );
+      }
 
       await updateCategory(
         req.params.id,
-        category_name
+        req.body.category_name
       );
 
       res.redirect("/admin/categories");
+
     } catch (error) {
       next(error);
     }

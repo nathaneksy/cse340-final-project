@@ -81,6 +81,17 @@ export const vehicleRules = [
     .withMessage("Description must be at least 10 characters.")
 ];
 
+export const categoryRules = [
+
+  body("category_name")
+    .trim()
+    .notEmpty()
+    .withMessage("Category name is required.")
+    .isLength({ min: 2, max: 50 })
+    .withMessage("Category name must be between 2 and 50 characters.")
+
+];
+
 import { validationResult } from "express-validator";
 
 export function validate(view, title) {
