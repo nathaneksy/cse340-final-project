@@ -53,7 +53,9 @@ export async function registerAccount(req, res, next) {
 
 export async function buildLogin(req, res) {
   res.render("account/login", {
-    title: "Login",
+      title: "Login",
+      errors: [],
+      formData: {},
   });
 }
 
@@ -64,7 +66,13 @@ export async function accountLogin(req, res, next) {
     const account = await getUserByEmail(email);
 
     if (!account) {
-      return res.send("Invalid email or password");
+      return res.status(400).render("account/login", {
+        title: "Login",
+        errors: [
+          { msg: "Invalid email or password." }
+        ],
+        formData: { email },
+      });
     }
 
     const validPassword = await bcrypt.compare(
@@ -73,7 +81,13 @@ export async function accountLogin(req, res, next) {
     );
 
     if (!validPassword) {
-      return res.send("Invalid email or password");
+      return res.status(400).render("account/login", {
+        title: "Login",
+        errors: [
+          { msg: "Invalid email or password." }
+        ],
+        formData: { email },
+      });
     }
 
     req.session.user = {

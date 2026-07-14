@@ -33,19 +33,34 @@ export const registrationRules = [
     .withMessage("Password must contain a number.")
 ];
 
+export const loginRules = [
+
+  body("email")
+    .trim()
+    .isEmail()
+    .withMessage("Please enter a valid email address.")
+    .normalizeEmail(),
+
+  body("password")
+    .notEmpty()
+    .withMessage("Password is required.")
+
+];
+
 import { validationResult } from "express-validator";
 
-export function checkValidation(req, res, next) {
-  const errors = validationResult(req);
+export function validate(view, title) {
+  return (req, res, next) => {
+    const errors = validationResult(req);
 
-  if (!errors.isEmpty()) {
-    return res.status(400).render("account/register", {
-      title: "Register",
-      errors: errors.array(),
-      formData: req.body,
-    });
-  }
+    if (!errors.isEmpty()) {
+      return res.status(400).render(view, {
+        title,
+        errors: errors.array(),
+        formData: req.body,
+      });
+    }
 
-  next();
+    next();
+  };
 }
-

@@ -9,8 +9,9 @@ import {
 } from "../controllers/accountController.js";
 
 import {
-    registrationRules,
-    checkValidation
+  registrationRules,
+  loginRules,
+  validate,
 } from "../utilities/validation.js";
 
 const router = express.Router();
@@ -18,15 +19,26 @@ const router = express.Router();
 router.get("/register", buildRegister);
 
 router.post(
-    "/register",
-    registrationRules,
-    checkValidation,
-    registerAccount
+  "/register",
+  registrationRules,
+  validate(
+    "account/register",
+    "Register"
+  ),
+  registerAccount
 );
 
 router.get("/login", buildLogin);
 
-router.post("/login", accountLogin);
+router.post(
+  "/login",
+  loginRules,
+  validate(
+    "account/login",
+    "Login"
+  ),
+  accountLogin
+);
 
 router.get("/test-session", (req, res) => {
   res.send(req.session.user);
