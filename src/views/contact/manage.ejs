@@ -2,55 +2,91 @@
 
 <%- include("../partials/header") %>
 
-<h1>Contact Messages</h1>
-<% if (messages.length === 0) { %>
+<main>
+  <h1>Contact Messages</h1>
 
-<p>No messages found.</p>
+  <% if (messages.length === 0) { %>
 
-<% } else { %>
+    <p>No messages found.</p>
 
-<table border="1">
+  <% } else { %>
 
-<tr>
+    <table border="1">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Subject</th>
+          <th>Date</th>
+          <th>Status</th>
+        </tr>
+      </thead>
 
-<th>Name</th>
+      <tbody>
+        <% messages.forEach(message => { %>
 
-<th>Email</th>
+          <tr>
+            <td><%= message.name %></td>
 
-<th>Subject</th>
+            <td>
+              <a href="mailto:<%= message.email %>">
+                <%= message.email %>
+              </a>
+            </td>
 
-<th>Date</th>
+            <td><%= message.subject %></td>
 
-</tr>
+            <td>
+              <%= new Date(message.created_at).toLocaleString() %>
+            </td>
 
-<% messages.forEach(message => { %>
+            <td>
+              <form
+                action="/contact/manage/<%= message.message_id %>/status"
+                method="POST"
+              >
+                <select name="status">
+                  <option
+                    value="Received"
+                    <%= message.status === "Received" ? "selected" : "" %>
+                  >
+                    Received
+                  </option>
 
-<tr>
+                  <option
+                    value="Replied"
+                    <%= message.status === "Replied" ? "selected" : "" %>
+                  >
+                    Replied
+                  </option>
 
-<td><%= message.name %></td>
+                  <option
+                    value="Closed"
+                    <%= message.status === "Closed" ? "selected" : "" %>
+                  >
+                    Closed
+                  </option>
+                </select>
 
-<td><%= message.email %></td>
+                <button type="submit">
+                  Update
+                </button>
+              </form>
+            </td>
+          </tr>
 
-<td><%= message.subject %></td>
+          <tr>
+            <td colspan="5">
+              <strong>Message:</strong>
+              <p><%= message.message %></p>
+            </td>
+          </tr>
 
-<td><%= message.created_at %></td>
+        <% }) %>
+      </tbody>
+    </table>
 
-</tr>
-
-<tr>
-
-<td colspan="4">
-
-<%= message.message %>
-
-</td>
-
-</tr>
-
-<% }) %>
-
-</table>
-
-<% } %>
+  <% } %>
+</main>
 
 <%- include("../partials/footer") %>

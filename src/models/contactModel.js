@@ -38,3 +38,22 @@ export async function getAllContactMessages() {
 
   return result.rows;
 }
+
+export async function updateContactStatus(
+  messageId,
+  status
+) {
+  const sql = `
+    UPDATE contact_messages
+    SET status = $1
+    WHERE message_id = $2
+    RETURNING *;
+  `;
+
+  const result = await pool.query(sql, [
+    status,
+    messageId,
+  ]);
+
+  return result.rows[0];
+}

@@ -1,6 +1,7 @@
 import {
   createContactMessage,
   getAllContactMessages,
+  updateContactStatus,
 } from "../models/contactModel.js";
 
 export function buildContactPage(req, res) {
@@ -56,6 +57,37 @@ export async function buildManageMessages(
       }
     );
 
+  } catch (error) {
+    next(error);
+  }
+}
+
+export async function changeMessageStatus(
+  req,
+  res,
+  next
+) {
+  try {
+    const allowedStatuses = [
+      "Received",
+      "Replied",
+      "Closed",
+    ];
+
+    const { status } = req.body;
+
+    if (!allowedStatuses.includes(status)) {
+      return res.status(400).render("errors/500", {
+        title: "Invalid Status",
+      });
+    }
+
+    await updateContactStatus(
+      req.params.messageId,
+      status
+    );
+
+    res.redirect("/contact/manage");
   } catch (error) {
     next(error);
   }

@@ -4,6 +4,7 @@ import {
   buildContactPage,
   submitContactForm,
   buildManageMessages,
+  changeMessageStatus,
 } from "../controllers/contactController.js";
 
 import {checkEmployee,} from "../middleware/authMiddleware.js";
@@ -34,6 +35,12 @@ router.get(
   "/manage",
   checkEmployee,
   buildManageMessages
+);
+
+router.post(
+  "/manage/:messageId/status",
+  checkEmployee,
+  changeMessageStatus
 );
 
 export default router;

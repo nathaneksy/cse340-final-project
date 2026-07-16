@@ -86,9 +86,9 @@ export async function buildEditReview(
       review.user_id !==
       req.session.user.user_id
     ) {
-      return res
-        .status(403)
-        .send("Unauthorized");
+      return res.status(403).render("errors/403", {
+        title: "Access Denied",
+      });
     }
 
     res.render(
@@ -120,9 +120,9 @@ export async function editReview(
       review.user_id !==
       req.session.user.user_id
     ) {
-      return res
-        .status(403)
-        .send("Unauthorized");
+      return res.status(403).render("errors/403", {
+        title: "Access Denied",
+      });
     }
 
     await updateReview(
@@ -172,9 +172,9 @@ export async function removeReview(
       !isEmployee &&
       !isAdmin
     ) {
-      return res
-        .status(403)
-        .send("Unauthorized");
+      return res.status(403).render("errors/403", {
+        title: "Access Denied",
+      });
     }
 
     const vehicleId =

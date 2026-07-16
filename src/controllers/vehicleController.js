@@ -28,7 +28,9 @@ export async function buildVehicleDetail(req, res, next) {
     const vehicle = await getVehicleById(vehicleId);
 
     if (!vehicle) {
-      return res.status(404).send("Vehicle not found");
+      return res.status(404).render("errors/404", {
+        title: "Page Not Found",
+      });
     }
 
     const reviews = await getVehicleReviews(vehicleId);

@@ -60,6 +60,20 @@ app.use("/contact", contactRoute);
 
 const PORT = process.env.PORT || 3000;
 
+app.use((req, res) => {
+  res.status(404).render("errors/404", {
+    title: "Page Not Found",
+  });
+});
+
+app.use((err, req, res, next) => {
+  console.error(err);
+
+  res.status(500).render("errors/500", {
+    title: "Server Error",
+  });
+});
+
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
