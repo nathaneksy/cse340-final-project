@@ -1,0 +1,28 @@
+<header>
+  <h1>Used Car Dealership</h1>
+
+  <nav>
+    <a href="/">Home</a>
+    <a href="/vehicles">Inventory</a>
+    <a href="/categories">Categories</a>
+    <a href="/contact">Contact</a>
+
+    <% if (typeof sessionUser !== "undefined" && sessionUser) { %>
+      <a href="/dashboard">Dashboard</a>
+
+      <% if (
+        sessionUser.role === "employee" ||
+        sessionUser.role === "owner"
+      ) { %>
+        <a href="/admin">Admin</a>
+      <% } %>
+
+      <a href="/account/logout">Logout</a>
+    <% } else { %>
+      <a href="/account/login">Login</a>
+      <a href="/account/register">Register</a>
+    <% } %>
+  </nav>
+
+  <hr>
+</header>

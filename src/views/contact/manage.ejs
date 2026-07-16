@@ -1,5 +1,8 @@
-<h1>Contact Messages</h1>
+<%- include("../partials/head") %>
 
+<%- include("../partials/header") %>
+
+<h1>Contact Messages</h1>
 <% if (messages.length === 0) { %>
 
 <p>No messages found.</p>
@@ -49,3 +52,5 @@
 </table>
 
 <% } %>
+
+<%- include("../partials/footer") %>

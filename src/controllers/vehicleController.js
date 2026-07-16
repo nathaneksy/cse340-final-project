@@ -21,38 +21,28 @@ export async function buildInventory(req, res, next) {
   }
 }
 
-export async function buildVehicleDetail(
-  req,
-  res,
-  next
-) {
+export async function buildVehicleDetail(req, res, next) {
   try {
     const vehicleId = req.params.vehicleId;
 
-    const vehicle =
-      await getVehicleById(vehicleId);
-
-    const reviews =
-      await getVehicleReviews(vehicleId);
-
-    const images =
-      await getVehicleImages(vehicleId);
+    const vehicle = await getVehicleById(vehicleId);
 
     if (!vehicle) {
-      return res.status(404).send(
-        "Vehicle not found"
-      );
+      return res.status(404).send("Vehicle not found");
     }
 
+    const reviews = await getVehicleReviews(vehicleId);
+    const images = await getVehicleImages(vehicleId);
+
     res.render("vehicles/detail", {
-        title,
-        vehicle,
-        reviews,
-        images,
-        sessionUser: req.session.user,
-        errors: [],
-        reviewForm: {},
-        serviceForm: {},
+      title: `${vehicle.year} ${vehicle.make} ${vehicle.model}`,
+      vehicle,
+      reviews,
+      images,
+      sessionUser: req.session.user,
+      errors: [],
+      reviewForm: {},
+      serviceForm: {},
     });
   } catch (error) {
     next(error);

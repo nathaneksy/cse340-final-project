@@ -98,11 +98,7 @@ export async function accountLogin(req, res, next) {
       role: account.role,
     };
 
-    res.send(`
-      Login successful!
-      <br>
-      Welcome ${account.first_name}
-    `);
+  res.redirect("/dashboard");
 
   } catch (error) {
     next(error);
@@ -111,6 +107,6 @@ export async function accountLogin(req, res, next) {
 
 export function accountLogout(req, res) {
   req.session.destroy(() => {
-    res.redirect("/");
+    res.redirect("/account/login");
   });
 }

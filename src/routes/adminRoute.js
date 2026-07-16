@@ -23,18 +23,14 @@ import {
 } from "../utilities/validation.js";
 
 import { validationResult } from "express-validator";
+import { buildAdminDashboard } from "../controllers/adminController.js";
 
 const router = express.Router();
 
 router.get(
   "/",
   checkEmployee,
-  (req, res) => {
-    res.render("admin/index", {
-      title: "Admin Dashboard",
-      user: req.session.user,
-    });
-  }
+  buildAdminDashboard
 );
 
 router.get(

@@ -1,13 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title><%= title %></title>
-</head>
-<body>
+<%- include("partials/head") %>
+
+<%- include("partials/header") %>
 
 <h1>Dashboard</h1>
-
 <p>
   Welcome,
   <%= user.first_name %>
@@ -18,5 +13,4 @@
   <%= user.role %>
 </p>
 
-</body>
-</html>
+<%- include("partials/footer") %>

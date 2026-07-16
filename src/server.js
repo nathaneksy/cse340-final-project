@@ -31,20 +31,22 @@ app.use(express.static("src/public"));
 app.use(
   session({
     store: new PgSession({
-      pool: pool,
+      pool,
       createTableIfMissing: true,
     }),
-
     secret: process.env.SESSION_SECRET,
-
     resave: false,
     saveUninitialized: false,
-
     cookie: {
       maxAge: 1000 * 60 * 60 * 24,
     },
   })
 );
+
+app.use((req, res, next) => {
+  res.locals.sessionUser = req.session.user || null;
+  next();
+});
 
 app.use("/", baseRoute);
 app.use("/categories", categoryRoute);

@@ -1,38 +1,84 @@
+<%- include("../partials/head") %>
+
+<%- include("../partials/header") %>
+
 <h1>Admin Dashboard</h1>
 
 <p>
   Welcome,
-  <%= user.first_name %>
+  <%= user.first_name %>.
 </p>
 
-<ul>
+<section class="dashboard-stats">
+  <h2>System Overview</h2>
 
-  <li>
-    <a href="/admin/vehicles">
-      Manage Vehicles
-    </a>
-  </li>
+  <div class="stat-grid">
 
-  <li>
-    <a href="/service/manage">
-      Manage Service Requests
-    </a>
-  </li>
+    <article class="stat-card">
+      <h3>Vehicles</h3>
+      <p class="stat-number">
+        <%= stats.vehicle_count %>
+      </p>
+      <p>Total vehicles in inventory</p>
+    </article>
 
-  <li>
-    <a href="/contact/manage">
-      View Contact Messages
-    </a>
-  </li>
+    <article class="stat-card">
+      <h3>Users</h3>
+      <p class="stat-number">
+        <%= stats.user_count %>
+      </p>
+      <p>Registered accounts</p>
+    </article>
 
-  <% if (user.role === 'owner') { %>
+    <article class="stat-card">
+      <h3>Open Service Requests</h3>
+      <p class="stat-number">
+        <%= stats.open_service_count %>
+      </p>
+      <p>Requests not yet completed</p>
+    </article>
 
+    <article class="stat-card">
+      <h3>Contact Messages</h3>
+      <p class="stat-number">
+        <%= stats.contact_count %>
+      </p>
+      <p>Total customer messages</p>
+    </article>
+
+  </div>
+</section>
+
+<section class="dashboard-actions">
+  <h2>Management</h2>
+
+  <ul>
     <li>
-      <a href="/admin/categories">
-        Manage Categories
+      <a href="/admin/vehicles">
+        Manage Vehicles
       </a>
     </li>
 
-  <% } %>
+    <li>
+      <a href="/service/manage">
+        Manage Service Requests
+      </a>
+    </li>
 
-</ul>
+    <li>
+      <a href="/contact/manage">
+        View Contact Messages
+      </a>
+    </li>
+
+    <% if (user.role === "owner") { %>
+      <li>
+        <a href="/admin/categories">
+          Manage Categories
+        </a>
+      </li>
+    <% } %>
+  </ul>
+</section>
+
+<%- include("../partials/footer") %>
