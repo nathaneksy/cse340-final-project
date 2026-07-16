@@ -124,13 +124,8 @@ public/images/ERD.png
 Email
 
 ```
-custom@test.com
-```
-
-Password
-
-```
-Password123
+user@test.com
+P@$$w0rd!
 ```
 
 ---
@@ -140,16 +135,9 @@ Password123
 Email
 
 ```
-test@test.com
+employee@test.com
+P@$$w0rd!
 ```
-
-Password
-
-```
-password123
-```
-
-> Note: This account was created before password validation requirements were implemented.
 
 ---
 
@@ -158,13 +146,8 @@ password123
 Email
 
 ```
-owner@test.com
-```
-
-Password
-
-```
-Password123
+admin@test.com
+P@$$w0rd!
 ```
 
 ---

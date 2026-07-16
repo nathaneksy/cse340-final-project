@@ -28,6 +28,8 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(express.static("src/public"));
 
+app.set("trust proxy", 1);
+
 app.use(
   session({
     store: new PgSession({
@@ -39,6 +41,9 @@ app.use(
     saveUninitialized: false,
     cookie: {
       maxAge: 1000 * 60 * 60 * 24,
+      httpOnly: true,
+      sameSite: "lax",
+      secure: process.env.NODE_ENV === "production",
     },
   })
 );
