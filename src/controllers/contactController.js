@@ -6,9 +6,10 @@ import {
 export function buildContactPage(req, res) {
   res.render("contact/index", {
     title: "Contact Us",
+    errors: [],
+    formData: {},
   });
 }
-
 export async function submitContactForm(
   req,
   res,

@@ -8,17 +8,58 @@ import {
   getServiceNotes,
 } from "../models/serviceModel.js";
 
+import { validationResult } from "express-validator";
+
+import {
+  getVehicleById,
+  getVehicleReviews,
+  getVehicleImages,
+} from "../models/vehicleModel.js";
+
 export async function submitRequest(
   req,
   res,
   next
 ) {
   try {
-    const userId =
-      req.session.user.user_id;
+
+    const errors =
+      validationResult(req);
 
     const vehicleId =
       req.params.vehicleId;
+
+    if (!errors.isEmpty()) {
+
+      const vehicle =
+        await getVehicleById(vehicleId);
+
+      const reviews =
+        await getVehicleReviews(vehicleId);
+
+      const images =
+        await getVehicleImages(vehicleId);
+
+      return res.status(400).render(
+        "vehicles/detail",
+        {
+          title: `${vehicle.year} ${vehicle.make} ${vehicle.model}`,
+          vehicle,
+          reviews,
+          images,
+          sessionUser:
+            req.session.user,
+          errors:
+            errors.array(),
+          reviewForm: {},
+          serviceForm:
+            req.body,
+        }
+      );
+    }
+
+    const userId =
+      req.session.user.user_id;
 
     const {
       service_type,
@@ -35,6 +76,7 @@ export async function submitRequest(
     res.redirect(
       "/service/my-requests"
     );
+
   } catch (error) {
     next(error);
   }

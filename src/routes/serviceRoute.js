@@ -14,11 +14,14 @@ import {
   checkEmployee,
 } from "../middleware/authMiddleware.js";
 
+import {serviceRequestRules,} from "../utilities/validation.js";
+
 const router = express.Router();
 
 router.post(
   "/vehicle/:vehicleId",
   checkLogin,
+  serviceRequestRules,
   submitRequest
 );
 

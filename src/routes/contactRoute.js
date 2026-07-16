@@ -6,9 +6,12 @@ import {
   buildManageMessages,
 } from "../controllers/contactController.js";
 
+import {checkEmployee,} from "../middleware/authMiddleware.js";
+
 import {
-  checkEmployee,
-} from "../middleware/authMiddleware.js";
+  contactRules,
+  validate,
+} from "../utilities/validation.js";
 
 const router = express.Router();
 
@@ -19,6 +22,11 @@ router.get(
 
 router.post(
   "/",
+  contactRules,
+  validate(
+    "contact/index",
+    "Contact Us"
+  ),
   submitContactForm
 );
 

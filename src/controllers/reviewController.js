@@ -5,6 +5,14 @@ import {
   deleteReview,
 } from "../models/reviewModel.js";
 
+import { validationResult } from "express-validator";
+
+import {
+  getVehicleById,
+  getVehicleReviews,
+  getVehicleImages,
+} from "../models/vehicleModel.js";
+
 export async function addReview(
   req,
   res,
@@ -12,11 +20,34 @@ export async function addReview(
 ) {
   try {
 
+    const errors = validationResult(req);
+
+    const vehicleId = req.params.vehicleId;
+
+    if (!errors.isEmpty()) {
+
+      const vehicle = await getVehicleById(vehicleId);
+
+      const reviews = await getVehicleReviews(vehicleId);
+
+      const images = await getVehicleImages(vehicleId);
+
+      return res.status(400).render(
+        "vehicles/detail",
+        {
+          title: `${vehicle.year} ${vehicle.make} ${vehicle.model}`,
+          vehicle,
+          reviews,
+          images,
+          sessionUser: req.session.user,
+          errors: errors.array(),
+          reviewForm: req.body,
+        }
+      );
+    }
+
     const userId =
       req.session.user.user_id;
-
-    const vehicleId =
-      req.params.vehicleId;
 
     const {
       rating,

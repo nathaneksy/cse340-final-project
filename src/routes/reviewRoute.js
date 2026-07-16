@@ -7,15 +7,16 @@ import {
   removeReview
 } from "../controllers/reviewController.js";
 
-import {
-  checkLogin
-} from "../middleware/authMiddleware.js";
+import {checkLogin} from "../middleware/authMiddleware.js";
+
+import { reviewRules } from "../utilities/validation.js";
 
 const router = express.Router();
 
 router.post(
   "/vehicle/:vehicleId",
   checkLogin,
+  reviewRules,
   addReview
 );
 

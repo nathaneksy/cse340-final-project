@@ -45,11 +45,14 @@ export async function buildVehicleDetail(
     }
 
     res.render("vehicles/detail", {
-      title: `${vehicle.year} ${vehicle.make} ${vehicle.model}`,
-      vehicle,
-      reviews,
-      images,
-      sessionUser: req.session.user,
+        title,
+        vehicle,
+        reviews,
+        images,
+        sessionUser: req.session.user,
+        errors: [],
+        reviewForm: {},
+        serviceForm: {},
     });
   } catch (error) {
     next(error);

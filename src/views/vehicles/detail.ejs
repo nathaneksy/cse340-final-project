@@ -1,3 +1,18 @@
+<% if (errors && errors.length > 0) { %>
+
+<div class="errors">
+    <ul>
+
+    <% errors.forEach(error => { %>
+
+        <li><%= error.msg %></li>
+
+    <% }) %>
+
+    </ul>
+</div>
+
+<% } %>
 <h1>
   <%= vehicle.year %>
   <%= vehicle.make %>
@@ -121,19 +136,44 @@
     name="rating"
     required
   >
-    <option value="5">5</option>
-    <option value="4">4</option>
-    <option value="3">3</option>
-    <option value="2">2</option>
-    <option value="1">1</option>
+<option
+    value="5"
+    <%= Number(reviewForm?.rating) === 5 ? "selected" : "" %>
+>
+    5
+</option>
+    <option
+      value="4"
+      <%= Number(reviewForm?.rating) === 4 ? "selected" : "" %>
+    >
+      4
+    </option>
+    <option
+      value="3"
+      <%= Number(reviewForm?.rating) === 3 ? "selected" : "" %>
+    >
+      3
+    </option>
+    <option
+      value="2"
+      <%= Number(reviewForm?.rating) === 2 ? "selected" : "" %>
+    >
+      2
+    </option>
+    <option
+      value="1"
+      <%= Number(reviewForm?.rating) === 1 ? "selected" : "" %>
+    >
+      1
+    </option>
   </select>
 
   <br><br>
 
-  <textarea
+<textarea
     name="review_text"
     required
-  ></textarea>
+><%= reviewForm?.review_text || "" %></textarea>
 
   <br><br>
   
@@ -158,6 +198,22 @@
 
 <hr>
 
+<% if (errors && errors.length > 0) { %>
+
+<div class="errors">
+  <ul>
+
+  <% errors.forEach(error => { %>
+
+    <li><%= error.msg %></li>
+
+  <% }) %>
+
+  </ul>
+</div>
+
+<% } %>
+
 <h2>Request Service</h2>
 
 <form
@@ -172,29 +228,45 @@
   <select
     name="service_type"
   >
-    <option>
+    <option
+      value="Oil Change"
+      <%= serviceForm?.service_type === "Oil Change"
+          ? "selected"
+          : "" %>>
       Oil Change
     </option>
 
-    <option>
+    <option
+      value="Inspection"
+      <%= serviceForm?.service_type === "Inspection"
+          ? "selected"
+          : "" %>>
       Inspection
     </option>
 
-    <option>
+    <option
+      value="Tire Rotation"
+      <%= serviceForm?.service_type === "Tire Rotation"
+          ? "selected"
+          : "" %>>
       Tire Rotation
     </option>
 
-    <option>
+    <option
+      value="General Repair"
+      <%= serviceForm?.service_type === "General Repair"
+          ? "selected"
+          : "" %>>
       General Repair
     </option>
   </select>
 
   <br><br>
 
-  <textarea
-    name="description"
-    required
-  ></textarea>
+<textarea
+  name="description"
+  required
+><%= serviceForm?.description || "" %></textarea>
 
   <br><br>
 

@@ -1,51 +1,80 @@
 <h1>Contact Us</h1>
 
+<% if (errors && errors.length > 0) { %>
+
+  <div class="errors">
+    <ul>
+
+      <% errors.forEach(error => { %>
+        <li><%= error.msg %></li>
+      <% }) %>
+
+    </ul>
+  </div>
+
+<% } %>
+
 <form
   action="/contact"
   method="POST"
 >
 
-<label>Name</label>
+  <label for="name">
+    Name
+  </label>
 
-<input
-  type="text"
-  name="name"
-  required
->
+  <input
+    type="text"
+    id="name"
+    name="name"
+    value="<%= formData?.name || '' %>"
+    required
+  >
 
-<br><br>
+  <br><br>
 
-<label>Email</label>
+  <label for="email">
+    Email
+  </label>
 
-<input
-  type="email"
-  name="email"
-  required
->
+  <input
+    type="email"
+    id="email"
+    name="email"
+    value="<%= formData?.email || '' %>"
+    required
+  >
 
-<br><br>
+  <br><br>
 
-<label>Subject</label>
+  <label for="subject">
+    Subject
+  </label>
 
-<input
-  type="text"
-  name="subject"
-  required
->
+  <input
+    type="text"
+    id="subject"
+    name="subject"
+    value="<%= formData?.subject || '' %>"
+    required
+  >
 
-<br><br>
+  <br><br>
 
-<label>Message</label>
+  <label for="message">
+    Message
+  </label>
 
-<textarea
-  name="message"
-  required
-></textarea>
+  <textarea
+    id="message"
+    name="message"
+    required
+  ><%= formData?.message || "" %></textarea>
 
-<br><br>
+  <br><br>
 
-<button>
-  Send Message
-</button>
+  <button type="submit">
+    Send Message
+  </button>
 
 </form>

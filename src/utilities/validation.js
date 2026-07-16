@@ -92,6 +92,60 @@ export const categoryRules = [
 
 ];
 
+export const reviewRules = [
+  body("rating")
+    .isInt({ min: 1, max: 5 })
+    .withMessage("Please select a rating between 1 and 5."),
+
+  body("review_text")
+    .trim()
+    .isLength({ min: 10, max: 1000 })
+    .withMessage("Review must be between 10 and 1000 characters.")
+];
+
+export const serviceRequestRules = [
+  body("service_type")
+    .trim()
+    .notEmpty()
+    .withMessage("Please select a service type."),
+
+  body("description")
+    .trim()
+    .isLength({ min: 10, max: 1000 })
+    .withMessage(
+      "Description must be between 10 and 1000 characters."
+    )
+];
+
+export const contactRules = [
+  body("name")
+    .trim()
+    .notEmpty()
+    .withMessage("Name is required.")
+    .isLength({ min: 2, max: 100 })
+    .withMessage("Name must be between 2 and 100 characters."),
+
+  body("email")
+    .trim()
+    .isEmail()
+    .withMessage("Please enter a valid email address.")
+    .normalizeEmail(),
+
+  body("subject")
+    .trim()
+    .notEmpty()
+    .withMessage("Subject is required.")
+    .isLength({ min: 3, max: 255 })
+    .withMessage("Subject must be between 3 and 255 characters."),
+
+  body("message")
+    .trim()
+    .notEmpty()
+    .withMessage("Message is required.")
+    .isLength({ min: 10, max: 2000 })
+    .withMessage("Message must be between 10 and 2000 characters.")
+];
+
 import { validationResult } from "express-validator";
 
 export function validate(view, title) {
