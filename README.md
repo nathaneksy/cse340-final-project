@@ -125,7 +125,6 @@ Email
 
 ```
 custom@test.com
-P@$$w0rd!
 ```
 
 ---
@@ -136,7 +135,6 @@ Email
 
 ```
 employee@test.com
-P@$$w0rd!
 ```
 
 ---
@@ -147,7 +145,6 @@ Email
 
 ```
 owner@test.com
-P@$$w0rd!
 ```
 
 ---

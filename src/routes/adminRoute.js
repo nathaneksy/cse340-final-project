@@ -52,7 +52,7 @@ router.get(
 
 router.get(
   "/vehicles/new",
-  checkEmployee,
+  checkOwner,
   async (req, res, next) => {
     try {
       const categories = await getCategories();
@@ -71,7 +71,7 @@ router.get(
 
 router.post(
   "/vehicles/new",
-  checkEmployee,
+  checkOwner,
   vehicleRules,
   async (req, res, next) => {
     try {
@@ -105,7 +105,7 @@ router.post(
 
 router.get(
   "/vehicles/edit/:id",
-  checkEmployee,
+  checkOwner,
   async (req, res, next) => {
     try {
       const vehicle = await getVehicleById(
@@ -136,7 +136,7 @@ router.get(
 
 router.post(
   "/vehicles/edit/:id",
-  checkEmployee,
+  checkOwner,
   vehicleRules,
   async (req, res, next) => {
     try {
@@ -177,7 +177,7 @@ router.post(
 
 router.post(
   "/vehicles/delete/:id",
-  checkEmployee,
+  checkOwner,
   async (req, res, next) => {
     try {
       await deleteVehicle(
