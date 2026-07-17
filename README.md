@@ -124,7 +124,7 @@ public/images/ERD.png
 Email
 
 ```
-user@test.com
+custom@test.com
 P@$$w0rd!
 ```
 
@@ -146,7 +146,7 @@ P@$$w0rd!
 Email
 
 ```
-admin@test.com
+owner@test.com
 P@$$w0rd!
 ```
 
