@@ -1,3 +1,7 @@
+console.log(
+  "Database URL configured:",
+  Boolean(process.env.DATABASE_URL)
+);
 import pg from "pg";
 import dotenv from "dotenv";
 
