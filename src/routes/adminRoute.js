@@ -105,7 +105,7 @@ router.post(
 
 router.get(
   "/vehicles/edit/:id",
-  checkOwner,
+  checkEmployee,
   async (req, res, next) => {
     try {
       const vehicle = await getVehicleById(
@@ -136,7 +136,7 @@ router.get(
 
 router.post(
   "/vehicles/edit/:id",
-  checkOwner,
+  checkEmployee,
   vehicleRules,
   async (req, res, next) => {
     try {
