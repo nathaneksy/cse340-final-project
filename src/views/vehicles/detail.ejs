@@ -95,26 +95,33 @@
 
   </div>
 
-  <% if (
+<% if (
   sessionUser &&
   sessionUser.user_id === review.user_id
 ) { %>
 
-  <a
-    href="/reviews/edit/<%= review.review_id %>"
-  >
+  <a href="/reviews/edit/<%= review.review_id %>">
     Edit
   </a>
+
+<% } %>
+
+<% if (
+  sessionUser &&
+  (
+    sessionUser.user_id === review.user_id ||
+    sessionUser.role === "employee" ||
+    sessionUser.role === "owner"
+  )
+) { %>
 
   <form
     action="/reviews/delete/<%= review.review_id %>"
     method="POST"
   >
-
     <button type="submit">
       Delete
     </button>
-
   </form>
 
 <% } %>
